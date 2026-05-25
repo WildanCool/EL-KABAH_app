@@ -1,4 +1,6 @@
+import 'package:el_kabah_app_backup/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class NextPrayerCard extends StatelessWidget {
   final String prayerName;
@@ -13,74 +15,71 @@ class NextPrayerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        height: 150,
+    return Container(
+      margin: EdgeInsets.only(right: 18),
+      // height: 100,
+      decoration: BoxDecoration(
+        color: AppColors.greenDark,
 
-        padding: const EdgeInsets.all(22),
+        borderRadius: BorderRadius.circular(18),
+      ),
 
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(24),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(18),
 
-          color: Colors.white.withOpacity(0.07),
-
-          border: Border.all(color: Colors.white10),
-        ),
-
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
+        child: Stack(
           children: [
-            Container(
-              width: 50,
-              height: 50,
+            // MOSQUE IMAGE
+            Positioned(
+              right: -18,
+              bottom: -18,
 
-              decoration: BoxDecoration(
-                color: Colors.blueAccent.withOpacity(0.12),
+              child: Image.asset(
+                "assets/mosque.png",
 
-                borderRadius: BorderRadius.circular(16),
-              ),
+                width: 95,
 
-              child: const Icon(
-                Icons.access_time_rounded,
-
-                color: Colors.blueAccent,
-                size: 28,
+                fit: BoxFit.contain,
               ),
             ),
 
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            // CONTENT
+            Padding(
+              padding: EdgeInsets.all(14),
 
-              children: [
-                const Text(
-                  "Next Prayer",
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
 
-                  style: TextStyle(color: Colors.white70, fontSize: 14),
-                ),
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-                const SizedBox(height: 6),
+                children: [
+                  Text(
+                    prayerName.toUpperCase(),
 
-                Text(
-                  prayerName,
+                    style: const TextStyle(
+                      color: Colors.white,
 
-                  style: const TextStyle(
-                    color: Colors.white,
+                      fontSize: 12,
 
-                    fontSize: 20,
-
-                    fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
-                ),
 
-                Text(
-                  prayerTime,
+                  Text(
+                    prayerTime,
 
-                  style: const TextStyle(color: Colors.white70, fontSize: 14),
-                ),
-              ],
+                    style: GoogleFonts.inter(
+                      color: Colors.white,
+
+                      fontSize: 50,
+
+                      height: 1,
+
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeHeader extends StatelessWidget {
   final String title;
@@ -16,82 +17,96 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 18),
+      child: Container(
+        width: double.infinity,
 
-      padding: const EdgeInsets.all(28),
+        height: 250,
 
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(26),
 
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          image: DecorationImage(
+            image: AssetImage("assets/masjid.jpg"),
 
-          colors: [
-            Colors.white.withOpacity(0.10),
+            fit: BoxFit.cover,
 
-            Colors.white.withOpacity(0.04),
-          ],
+            colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.45),
+              BlendMode.darken,
+            ),
+          ),
         ),
 
-        border: Border.all(color: Colors.white10),
-      ),
+        child: Container(
+          padding: EdgeInsets.all(28),
 
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(26),
 
-        children: [
-          Text(
-            title,
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
 
-            style: TextStyle(
-              color: Colors.white.withOpacity(0.7),
-
-              fontSize: 16,
+              colors: [
+                Colors.black.withOpacity(0.15),
+                Colors.black.withOpacity(0.35),
+              ],
             ),
           ),
 
-          const SizedBox(height: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
 
-          Text(
-            prayerName,
+            children: [
+              Text(
+                title,
 
-            style: const TextStyle(
-              color: Colors.white,
-
-              fontSize: 36,
-
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-
-          const SizedBox(height: 22),
-
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-
-            decoration: BoxDecoration(
-              color: Colors.greenAccent.withOpacity(0.14),
-
-              borderRadius: BorderRadius.circular(20),
-
-              border: Border.all(color: Colors.greenAccent.withOpacity(0.2)),
-            ),
-
-            child: Text(
-              countdown,
-
-              style: const TextStyle(
-                color: Colors.greenAccent,
-
-                fontSize: 30,
-
-                fontWeight: FontWeight.bold,
+                style: GoogleFonts.inter(
+                  color: Colors.white.withOpacity(0.95),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
+
+              SizedBox(height: 4),
+
+              Text(
+                prayerName.toUpperCase(),
+                style: GoogleFonts.inter(
+                  color: Colors.white,
+                  fontSize: 60,
+                  height: 1,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+
+              SizedBox(height: 12),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 22, vertical: 10),
+
+                decoration: BoxDecoration(
+                  color: Color(0xff99A06B),
+
+                  borderRadius: BorderRadius.circular(16),
+                ),
+
+                child: Text(
+                  countdown,
+
+                  style: GoogleFonts.inter(
+                    color: Colors.white,
+
+                    fontSize: 20,
+
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

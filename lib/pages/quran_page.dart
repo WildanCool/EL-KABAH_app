@@ -1,32 +1,26 @@
 import 'package:el_kabah_app_backup/models/surat_model.dart';
 
 import 'package:el_kabah_app_backup/pages/detail_surah_page.dart';
-
 import 'package:el_kabah_app_backup/services/quran_service.dart';
-
+import 'package:el_kabah_app_backup/theme/theme.dart';
 import 'package:el_kabah_app_backup/widgets/quran/surat_tile.dart';
-
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class QuranPage extends StatefulWidget {
   const QuranPage({super.key});
 
   @override
-  State<QuranPage> createState() =>
-      _QuranPageState();
+  State<QuranPage> createState() => _QuranPageState();
 }
 
-class _QuranPageState
-    extends State<QuranPage> {
-
+class _QuranPageState extends State<QuranPage> {
   List<SuratModel> surahList = [];
 
   bool isLoading = true;
 
   Future<void> loadSurah() async {
-
-    surahList =
-        await QuranService.getAllSurah();
+    surahList = await QuranService.getAllSurah();
 
     setState(() {
       isLoading = false;
@@ -42,14 +36,17 @@ class _QuranPageState
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-
       appBar: AppBar(
-        title: const Text("Al-Quran"),
+        title: Text(
+          "Al-Quran",
+          style: GoogleFonts.inter(
+            fontWeight: FontWeight.bold,
+            color: AppColors.white,
+          ),
+        ),
 
-        backgroundColor:
-            Colors.transparent,
+        backgroundColor: AppColors.greenDark,
 
         elevation: 0,
       ),
@@ -57,17 +54,12 @@ class _QuranPageState
       extendBodyBehindAppBar: true,
 
       body: Container(
-
         width: double.infinity,
         height: double.infinity,
 
         decoration: BoxDecoration(
-
           image: DecorationImage(
-
-            image: const AssetImage(
-              "assets/masjid.jpg",
-            ),
+            image: AssetImage("assets/masjid.jpg"),
 
             fit: BoxFit.cover,
 
@@ -80,47 +72,26 @@ class _QuranPageState
         ),
 
         child: SafeArea(
-
           child: isLoading
-
-              ? const Center(
-                  child:
-                      CircularProgressIndicator(),
-                )
-
+              ? Center(child: CircularProgressIndicator())
               : ListView.builder(
+                  padding: EdgeInsets.all(20),
 
-                  padding:
-                      const EdgeInsets.all(20),
+                  itemCount: surahList.length,
 
-                  itemCount:
-                      surahList.length,
-
-                  itemBuilder: (
-                    context,
-                    index,
-                  ) {
-
-                    final surat =
-                        surahList[index];
+                  itemBuilder: (context, index) {
+                    final surat = surahList[index];
 
                     return SuratTile(
-
                       surat: surat,
 
                       onTap: () {
-
                         Navigator.push(
-
                           context,
 
                           MaterialPageRoute(
-
                             builder: (_) {
-
-                              return DetailSurahPage(
-                                surat: surat,
-                              );
+                              return DetailSurahPage(surat: surat);
                             },
                           ),
                         );

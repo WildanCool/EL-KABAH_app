@@ -1,3 +1,4 @@
+import 'package:el_kabah_app_backup/widgets/custom_appbar.dart';
 import 'package:el_kabah_app_backup/widgets/qiblah/qiblah_compass.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,7 @@ class QiblahPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(),
       body: Container(
         height: double.infinity,
         width: double.infinity,

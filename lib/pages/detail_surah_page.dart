@@ -1,11 +1,10 @@
 import 'package:el_kabah_app_backup/models/ayat_model.dart';
 import 'package:el_kabah_app_backup/models/surat_model.dart';
-
 import 'package:el_kabah_app_backup/services/quran_service.dart';
-
+import 'package:el_kabah_app_backup/theme/theme.dart';
 import 'package:el_kabah_app_backup/widgets/quran/ayat_card.dart';
-
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class DetailSurahPage extends StatefulWidget {
   final SuratModel surat;
@@ -40,10 +39,14 @@ class _DetailSurahPageState extends State<DetailSurahPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.surat.namaLatin),
-
-        backgroundColor: Colors.transparent,
-
+        title: Text(
+          widget.surat.namaLatin,
+          style: GoogleFonts.inter(
+            fontWeight: FontWeight.bold,
+            color: AppColors.white,
+          ),
+        ),
+        backgroundColor: AppColors.greenDark,
         elevation: 0,
       ),
 
@@ -55,7 +58,7 @@ class _DetailSurahPageState extends State<DetailSurahPage> {
 
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: const AssetImage("assets/masjid.jpg"),
+            image: AssetImage("assets/masjid.jpg"),
 
             fit: BoxFit.cover,
 
@@ -69,17 +72,18 @@ class _DetailSurahPageState extends State<DetailSurahPage> {
 
         child: SafeArea(
           child: isLoading
-              ? const Center(child: CircularProgressIndicator())
+              ? Center(child: CircularProgressIndicator())
               : ListView(
-                  padding: const EdgeInsets.all(20),
+                  padding: EdgeInsets.all(20),
 
                   children: [
+                    SizedBox(height: 10),
                     Text(
                       widget.surat.nama,
 
                       textAlign: TextAlign.center,
 
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
 
                         fontSize: 34,
@@ -88,8 +92,7 @@ class _DetailSurahPageState extends State<DetailSurahPage> {
                       ),
                     ),
 
-                    const SizedBox(height: 8),
-
+                    // SizedBox(height: 8),
                     Text(
                       widget.surat.arti,
 
@@ -98,7 +101,7 @@ class _DetailSurahPageState extends State<DetailSurahPage> {
                       style: TextStyle(color: Colors.white.withOpacity(0.7)),
                     ),
 
-                    const SizedBox(height: 30),
+                    SizedBox(height: 30),
 
                     ...ayatList.map((ayat) {
                       return AyatCard(ayat: ayat);

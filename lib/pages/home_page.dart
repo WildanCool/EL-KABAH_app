@@ -6,11 +6,13 @@ import 'package:el_kabah_app_backup/services/sholat_service.dart';
 import 'package:el_kabah_app_backup/utils/sholat_helper.dart';
 import 'package:el_kabah_app_backup/widgets/custom_appbar.dart';
 import 'package:el_kabah_app_backup/widgets/home/home_header.dart';
-import 'package:el_kabah_app_backup/widgets/home/menu_card.dart';
+import 'package:el_kabah_app_backup/widgets/home/jadwal_kajian_section.dart';
+import 'package:el_kabah_app_backup/widgets/home/location_card.dart';
+import 'package:el_kabah_app_backup/widgets/home/motivation_slider_section.dart';
+import 'package:el_kabah_app_backup/widgets/home/quran_card.dart';
 import 'package:el_kabah_app_backup/widgets/home/next_prayer_card.dart';
-
+import 'package:el_kabah_app_backup/widgets/home/youtube_section.dart';
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -79,14 +81,12 @@ class _HomePageState extends State<HomePage> {
 
       final difference = now.difference(prayerTime);
 
-      // ================= CURRENT PRAYER =================
-
+      // CURRENT PRAYER
       if (difference.inSeconds >= 0 && difference.inHours < 1) {
         currentPrayer = sholatTimes[i]["name"]!;
 
         headerTitle = "Sekarang Waktu";
 
-        // NEXT PRAYER
         if (i < sholatTimes.length - 1) {
           nextPrayer = sholatTimes[i + 1]["name"]!;
 
@@ -96,8 +96,7 @@ class _HomePageState extends State<HomePage> {
         return;
       }
 
-      // ================= AFTER 1 HOUR =================
-
+      // AFTER 1 HOUR
       if (difference.inHours >= 1) {
         if (i < sholatTimes.length - 1) {
           currentPrayer = sholatTimes[i + 1]["name"]!;
@@ -120,8 +119,7 @@ class _HomePageState extends State<HomePage> {
       loadSholat();
     });
 
-    // REALTIME
-    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
       updatePrayerStatus();
 
       setState(() {});
@@ -142,132 +140,84 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: CustomAppBar(),
 
-      extendBodyBehindAppBar: true,
+      backgroundColor: Color(0xffEBEBEB),
 
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
+      body: SafeArea(
+        child: isLoading
+            ? Center(child: CircularProgressIndicator())
+            : ListView(
+                children: [
+                  SizedBox(height: 18),
 
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: const AssetImage("assets/masjid.jpg"),
+                  // ================= LOCATION =================
+                  LocationCard(
+                    city: locationProvider.city,
 
-            fit: BoxFit.cover,
+                    country: locationProvider.country,
+                  ),
 
-            colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.84),
-              BlendMode.darken,
-            ),
-          ),
-        ),
+                  SizedBox(height: 18),
 
-        child: SafeArea(
-          child: isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : RefreshIndicator(
-                  onRefresh: loadSholat,
+                  // ================= HEADER =================
+                  HomeHeader(
+                    title: headerTitle,
 
-                  child: ListView(
-                    padding: const EdgeInsets.all(20),
+                    prayerName: currentPrayer,
 
+                    countdown: SholatHelper.getSholatStatus(sholatTimes),
+                  ),
+
+                  SizedBox(height: 16),
+
+                  // ================= MENU =================
+                  Row(
                     children: [
-                      // ================= LOCATION =================
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.location_on_rounded,
-                            color: Colors.greenAccent,
-                            size: 20,
-                          ),
+                      Expanded(
+                        child: QuranCard(
+                          title: "AL\nQURAN",
 
-                          const SizedBox(width: 6),
+                          icon: Icons.menu_book_rounded,
 
-                          Text(
-                            "${locationProvider.city}, ${locationProvider.country}",
+                          onTap: () {
+                            Navigator.push(
+                              context,
 
-                            style: TextStyle(
-                              color: Colors.white.withOpacity(0.75),
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 22),
-
-                      // ================= HEADER =================
-                      HomeHeader(
-                        title: headerTitle,
-
-                        prayerName: currentPrayer,
-
-                        countdown: SholatHelper.getSholatStatus(sholatTimes),
-                      ),
-
-                      const SizedBox(height: 24),
-
-                      // ================= MENU =================
-                      Row(
-                        children: [
-                          // QURAN
-                          MenuCard(
-                            title: "Al-Quran",
-
-                            icon: Icons.menu_book_rounded,
-
-                            onTap: () {
-                              Navigator.push(
-                                context,
-
-                                MaterialPageRoute(
-                                  builder: (_) {
-                                    return const QuranPage();
-                                  },
-                                ),
-                              );
-                            },
-                          ),
-
-                          const SizedBox(width: 16),
-
-                          // NEXT PRAYER
-                          NextPrayerCard(
-                            prayerName: nextPrayer,
-                            prayerTime: nextPrayerTime,
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 24),
-
-                      // ================= EXTRA SPACE =================
-                      Container(
-                        height: 180,
-
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(28),
-
-                          color: Colors.white.withOpacity(0.05),
-
-                          border: Border.all(color: Colors.white10),
+                              MaterialPageRoute(builder: (_) => QuranPage()),
+                            );
+                          },
                         ),
+                      ),
 
-                        child: Center(
-                          child: Text(
-                            "Coming Soon",
+                      SizedBox(width: 12),
 
-                            style: TextStyle(
-                              color: Colors.white.withOpacity(0.4),
+                      Expanded(
+                        child: NextPrayerCard(
+                          prayerName: nextPrayer,
 
-                              fontSize: 18,
-                            ),
-                          ),
+                          prayerTime: nextPrayerTime,
                         ),
                       ),
                     ],
                   ),
-                ),
-        ),
+
+                  SizedBox(height: 28),
+
+                  // ================= YOUTUBE =================
+                  YoutubeSection(),
+
+                  SizedBox(height: 30),
+
+                  // ================= JADWAL KAJIAN =================
+                  JadwalKajianSection(),
+
+                  SizedBox(height: 30),
+
+                  // ================= JADWAL KAJIAN =================
+                  MotivationSliderSection(),
+
+                  SizedBox(height: 30),
+                ],
+              ),
       ),
     );
   }
