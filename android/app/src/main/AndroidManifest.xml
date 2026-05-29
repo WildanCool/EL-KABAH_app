@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="el_kabah_app_backup"
+        android:label="EL-KABAH"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
