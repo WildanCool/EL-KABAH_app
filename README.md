@@ -1,6 +1,12 @@
 # EL-KABAH APP
 Aplikasi islami modern berbasis Flutter yang membantu umat muslim dalam menjalankan ibadah sehari-hari dengan lebih mudah, praktis, dan nyaman.
 
+<div align="center">
+  <img width="526" height="1079" alt="Screenshot 2026-05-26 100504" src="https://github.com/user-attachments/assets/2e1f24db-f847-4f94-8eb0-a0d4ff2f1941" />
+<img width="531" height="1079" alt="Screenshot 2026-05-26 100420" src="https://github.com/user-attachments/assets/b4fa195e-30de-4ea2-92f7-8c3fcf912845" />
+<img width="521" height="1068" alt="Screenshot 2026-05-26 100412" src="https://github.com/user-attachments/assets/9ca63ee5-2282-4c4b-8d03-0b0dc0bed3df" />
+</div>
+
 ## ✨ Fitur Utama
 🕌 Jadwal Waktu Sholat
 Menampilkan waktu sholat harian
